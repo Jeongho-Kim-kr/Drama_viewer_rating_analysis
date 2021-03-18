@@ -15,7 +15,7 @@ link.reverse() # 최신 드라마부터 긁어오므로 시간순으로 하기 �
 
 ## 스크래핑 시작(ctrl + c로 정지)
 data_file = open('data.txt', 'a', encoding='utf8')
-browser = webdriver.Chrome('../파이썬/chromedriver/chromedriver')
+browser = webdriver.Chrome(r'C:\Users\KJH\OneDrive - 인하대학교\0 정리\1 깃허브 업로드\chromedriver\chromedriver.exe')
 index = 0
 
 for i in range(0,100):

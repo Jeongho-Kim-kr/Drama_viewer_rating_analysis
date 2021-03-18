@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 
 ## 페이지 소스 가져오기(여기서 클릭하는 연도 수정)
-browser = webdriver.Chrome('../1 깃허브 업로드/Drama_viewer_rating_analysis/1_web_scraping_naver_drama/chromedriver/chromedriver.exe')
+browser = webdriver.Chrome(r'C:\Users\KJH\OneDrive - 인하대학교\0 정리\1 깃허브 업로드\chromedriver\chromedriver.exe')
 
 url = 'https://search.naver.com/search.naver?sm=tab_sug.top&where=nexearch&query=%EB%B0%A9%EC%98%81%EC%A2%85%EB%A3%8C%ED%95%9C%EA%B5%AD%EB%93%9C%EB%9D%BC%EB%A7%88&oquery=%EB%B0%A9%EC%98%81%EC%A2%85%EB%A3%8C%ED%95%9C%EA%B5%AD%EB%93%9C%EB%9D%BC%EB%A7%88&tqi=huaBXsprvmZssemcPMZssssstnV-331748&acq=%EB%B0%A9%EC%98%81%EC%A2%85%EB%A3%8C%ED%95%9C%EA%B5%AD%EB%93%9C%EB%9D%BC%EB%A7%88&acr=1&qdt=0'
 browser.get(url)
