@@ -11,7 +11,6 @@ knitr::opts_chunk$set(echo = TRUE, comment=NA)
 rm(list=ls())
 
 library(readxl)
-setwd('C:/Users/KJH/Desktop/새 폴더')
 netflix <- read_excel('netflix_original_종합_수정(sum).xlsx')
 
 netflix <- netflix[,c(7:8,15,29:37)]
