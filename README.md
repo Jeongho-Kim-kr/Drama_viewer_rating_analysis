@@ -1,6 +1,6 @@
 # Netflix rate analysis
 실전문제연구팀(I-gps) \
-한국 드라마 시청률 분석 -> netflix original 평점 분석
+한국 드라마 시청률 분석 -> netflix original 평점 분석 \ \
 
 1. 한국드라마 시청률 분석
 20210212 변수 설정을 위해 논문 및 의견 정리
