@@ -4,7 +4,7 @@ rm(list=ls())
 library(readxl)
 netflix <- read_excel('netflix_original_종합_수정(sum).xlsx')
 
-netflix <- netflix[,c(7:8,15,29:37)]
+netflix <- netflix[,c(9,15,18,32:40)]
 netflix <- na.omit(netflix)
 netflix[, 4:12] <- lapply(netflix[, 4:12], factor)
 netflix[, 1:3] <- lapply(netflix[, 1:3], as.numeric)
@@ -18,49 +18,49 @@ netflix[, 1:3] <- lapply(netflix[, 1:3], as.numeric)
 
 ### 년도
 library(ggplot2)
-ggplot(netflix,aes(x=as.factor(year),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(year)),outlier.colour = 'red',alpha=I(0.4))+
+ggplot(netflix,aes(x=as.factor(Year),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Year)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("년도") + ylab("점수") + labs(fill = "년도")
 
 ### age
-ggplot(netflix,aes(x=as.factor(age),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(age)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("age") + ylab("점수") + labs(fill = "age")
+ggplot(netflix,aes(x=as.factor(Age),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Age)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("age") + ylab("점수") + labs(fill = "Age")
 
 ### harmful_themes
-ggplot(netflix,aes(x=as.factor(harmful_themes),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(harmful_themes)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("harmful_themes") + ylab("점수") + labs(fill = "harmful_themes")
+ggplot(netflix,aes(x=as.factor(Harmful_themes),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Harmful_themes)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("harmful_themes") + ylab("점수") + labs(fill = "Harmful_themes")
 
 ### lewdness
-ggplot(netflix,aes(x=as.factor(lewdness),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(lewdness)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("lewdness") + ylab("점수") + labs(fill = "lewdness")
+ggplot(netflix,aes(x=as.factor(Lewdness),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Lewdness)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("lewdness") + ylab("점수") + labs(fill = "Lewdness")
 
 ### violence
-ggplot(netflix,aes(x=as.factor(violence),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(violence)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("violence") + ylab("점수") + labs(fill = "violence")
+ggplot(netflix,aes(x=as.factor(Violence),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Violence)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("violence") + ylab("점수") + labs(fill = "Violence")
 
 ### profanity
-ggplot(netflix,aes(x=as.factor(profanity),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(profanity)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("profanity") + ylab("점수") + labs(fill = "profanity")
+ggplot(netflix,aes(x=as.factor(Profanity),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Profanity)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("profanity") + ylab("점수") + labs(fill = "Profanity")
 
 ### fear
-ggplot(netflix,aes(x=as.factor(fear),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(fear)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("fear") + ylab("점수") + labs(fill = "fear")
+ggplot(netflix,aes(x=as.factor(Fear),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Fear)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("fear") + ylab("점수") + labs(fill = "Fear")
 
 ### drugs
-ggplot(netflix,aes(x=as.factor(drugs),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(drugs)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("drugs") + ylab("점수") + labs(fill = "drugs")
+ggplot(netflix,aes(x=as.factor(Drugs),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Drugs)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("drugs") + ylab("점수") + labs(fill = "Drugs")
 
 ### immatatable
-ggplot(netflix,aes(x=as.factor(immatatable),y=All_rating))+
-  geom_boxplot(aes(fill=as.factor(immatatable)),outlier.colour = 'red',alpha=I(0.4))+
-  xlab("immatatable") + ylab("점수") + labs(fill = "immatatable")
+ggplot(netflix,aes(x=as.factor(Immatatable),y=All_rating))+
+  geom_boxplot(aes(fill=as.factor(Immatatable)),outlier.colour = 'red',alpha=I(0.4))+
+  xlab("immatatable") + ylab("점수") + labs(fill = "Immatatable")
 
 ### cooks distance outlier제거
 fit_tmp <- lm(All_rating ~ . , data=netflix)
