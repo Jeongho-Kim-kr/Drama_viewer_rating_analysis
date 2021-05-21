@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE, comment=NA)
 rm(list=ls())
 
 library(readxl)
-netflix <- read_excel('netflix_original_종합_수정(sum).xlsx')
+netflix <- read_excel('netflix_original_종합_수정(sum)_(정량화보함).xlsx')
 
 netflix <- netflix[,c(9,15,18,32:40)]
 netflix <- na.omit(netflix)
