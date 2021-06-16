@@ -14,36 +14,11 @@ rm(list=ls())
 
 library(readxl)
 netflix <- read_excel('netflix_original_종합_수정(sum)_(정량화보함).xlsx')
-```
 
-### 종합 데이터
-
-```{r}
-netflix_original <- netflix
-netflix_original <- netflix_original[,c(9,15,18,32:40)]
-netflix_original <- na.omit(netflix_original)
-netflix_original[, 4:12] <- lapply(netflix_original[, 4:12], factor)
-netflix_original[, 1:3] <- lapply(netflix_original[, 1:3], as.numeric)
-```
-
-### 드라마 데이터
-
-```{r}
-netflix_drama <- netflix[1:170,]
-netflix_drama <- netflix_drama[,c(9,15,18,32:40)]
-netflix_drama <- na.omit(netflix_drama)
-netflix_drama[, 4:12] <- lapply(netflix_drama[, 4:12], factor)
-netflix_drama[, 1:3] <- lapply(netflix_drama[, 1:3], as.numeric)
-```
-
-### 영화 데이터
-
-```{r}
-netflix_movie <- netflix[171:589,]
-netflix_movie <- netflix_movie[,c(9,15,18,32:40)]
-netflix_movie <- na.omit(netflix_movie)
-netflix_movie[, 4:12] <- lapply(netflix_movie[, 4:12], factor)
-netflix_movie[, 1:3] <- lapply(netflix_movie[, 1:3], as.numeric)
+netflix <- netflix[,c(9,15,18,32:40)]
+netflix <- na.omit(netflix)
+netflix[, 4:12] <- lapply(netflix[, 4:12], factor)
+netflix[, 1:3] <- lapply(netflix[, 1:3], as.numeric)
 ```
 
 ```{r}
@@ -58,7 +33,7 @@ netflix_movie[, 1:3] <- lapply(netflix_movie[, 1:3], as.numeric)
 
 ```{r}
 library(ggplot2)
-ggplot(netflix_original,aes(x=as.factor(Year),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Year),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Year)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("년도") + ylab("점수") + labs(fill = "년도")
 ```
@@ -66,7 +41,7 @@ ggplot(netflix_original,aes(x=as.factor(Year),y=All_rating))+
 ### Age
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Age),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Age),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Age)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("age") + ylab("점수") + labs(fill = "Age")
 ```
@@ -74,7 +49,7 @@ ggplot(netflix_original,aes(x=as.factor(Age),y=All_rating))+
 ### Harmful_themes
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Harmful_themes),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Harmful_themes),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Harmful_themes)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("harmful_themes") + ylab("점수") + labs(fill = "Harmful_themes")
 ```
@@ -82,7 +57,7 @@ ggplot(netflix_original,aes(x=as.factor(Harmful_themes),y=All_rating))+
 ### Lewdness
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Lewdness),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Lewdness),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Lewdness)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("lewdness") + ylab("점수") + labs(fill = "Lewdness")
 ```
@@ -90,7 +65,7 @@ ggplot(netflix_original,aes(x=as.factor(Lewdness),y=All_rating))+
 ### Violence
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Violence),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Violence),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Violence)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("violence") + ylab("점수") + labs(fill = "Violence")
 ```
@@ -98,7 +73,7 @@ ggplot(netflix_original,aes(x=as.factor(Violence),y=All_rating))+
 ### Profanity
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Profanity),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Profanity),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Profanity)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("profanity") + ylab("점수") + labs(fill = "Profanity")
 ```
@@ -106,7 +81,7 @@ ggplot(netflix_original,aes(x=as.factor(Profanity),y=All_rating))+
 ### Fear
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Fear),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Fear),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Fear)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("fear") + ylab("점수") + labs(fill = "Fear")
 ```
@@ -114,7 +89,7 @@ ggplot(netflix_original,aes(x=as.factor(Fear),y=All_rating))+
 ### Drugs
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Drugs),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Drugs),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Drugs)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("drugs") + ylab("점수") + labs(fill = "Drugs")
 ```
@@ -122,62 +97,33 @@ ggplot(netflix_original,aes(x=as.factor(Drugs),y=All_rating))+
 ### Immatatable
 
 ```{r}
-ggplot(netflix_original,aes(x=as.factor(Immatatable),y=All_rating))+
+ggplot(netflix,aes(x=as.factor(Immatatable),y=All_rating))+
   geom_boxplot(aes(fill=as.factor(Immatatable)),outlier.colour = 'red',alpha=I(0.4))+
   xlab("immatatable") + ylab("점수") + labs(fill = "Immatatable")
 ```
 
-## Cooks distance outlier제거
-
-### 종합 데이터
+### Cooks distance outlier제거
 
 ```{r}
-fit_tmp <- lm(All_rating ~ . , data=netflix_original)
+fit_tmp <- lm(All_rating ~ . , data=netflix)
 cooks <- cooks.distance(fit_tmp)
 plot(cooks, pch=".", cex=1.5, main = "Plot for Cook's Distance")
 
 text(x=1:length(cooks), y=cooks, labels = ifelse(cooks > 4/nrow(netflix), names(cooks), ""), col = "red")
 outlier <- names(cooks)[(cooks > 4/nrow(netflix))]
 outlier <- as.integer(na.omit(outlier))
-netflix_original <- netflix_original[-outlier, ]
-```
-
-### 드라마 데이터
-
-```{r}
-fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
-cooks <- cooks.distance(fit_tmp)
-plot(cooks, pch=".", cex=1.5, main = "Plot for Cook's Distance")
-
-text(x=1:length(cooks), y=cooks, labels = ifelse(cooks > 4/nrow(netflix), names(cooks), ""), col = "red")
-outlier <- names(cooks)[(cooks > 4/nrow(netflix))]
-outlier <- as.integer(na.omit(outlier))
-netflix_drama <- netflix_drama[-outlier, ]
-```
-
-### 영화 데이터
-
-```{r}
-fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
-cooks <- cooks.distance(fit_tmp)
-plot(cooks, pch=".", cex=1.5, main = "Plot for Cook's Distance")
-
-text(x=1:length(cooks), y=cooks, labels = ifelse(cooks > 4/nrow(netflix), names(cooks), ""), col = "red")
-outlier <- names(cooks)[(cooks > 4/nrow(netflix))]
-outlier <- as.integer(na.omit(outlier))
-netflix_movie <- netflix_movie[-outlier, ]
+netflix <- netflix[-outlier, ]
 ```
 
 ## 일반회귀
 
-### 종합 데이터
-
 ```{r}
-fit_OLS_original <- lm(All_rating ~ . , data=netflix_original)
-summary(fit_OLS_original)
+# 일반회귀
+fit_OLS <- lm(All_rating ~ . , data=netflix)
+summary(fit_OLS)
 ```
 
-#### 세부 factor에서 유의한 값
+### 세부 factor에서 유의한 값
 
 -   Mean_Length
 
@@ -194,10 +140,10 @@ summary(fit_OLS_original)
 -   Drugs높음
 
 ```{r}
-anova(fit_OLS_original)
+anova(fit_OLS)
 ```
 
-#### 유의한 factor
+### 유의한 factor
 
 -   Mean_Length
 
@@ -215,53 +161,19 @@ anova(fit_OLS_original)
 
 ```{r}
 par(mfrow = c(2,2))
-plot(fit_OLS_original)
-```
-
-### 드라마 데이터
-
-```{r}
-fit_OLS_drama <- lm(All_rating ~ . , data=netflix_drama)
-summary(fit_OLS_drama)
-```
-
-```{r}
-anova(fit_OLS_drama)
-```
-
-```{r}
-par(mfrow = c(2,2))
-plot(fit_OLS_drama)
-```
-
-### 영화 데이터
-
-```{r}
-fit_OLS_movie <- lm(All_rating ~ . , data=netflix_movie)
-summary(fit_OLS_movie)
-```
-
-```{r}
-anova(fit_OLS_movie)
-```
-
-```{r}
-par(mfrow = c(2,2))
-plot(fit_OLS_movie)
+plot(fit_OLS)
 ```
 
 ## 로버스트 회귀
 
-### 종합 데이터
-
 ```{r}
 # 로버스트 회귀
 library('MASS')
-fit_m_original <- rlm(All_rating ~ . , data=netflix_original)
-summary(fit_m_original)
+fit_m <- rlm(All_rating ~ . , data=netflix)
+summary(fit_m)
 ```
 
-#### 유의한 factor (t값 1.96으로 평가)
+### 유의한 factor (t값 1.96으로 평가)
 
 -   Mean_Length
 
@@ -272,50 +184,14 @@ summary(fit_m_original)
 -   Fear높음
 
 ```{r}
-anova(fit_m_original)
+anova(fit_m)
 ```
 
 ```{r}
 par(mfrow = c(2,2))
-plot(fit_m_original)
-```
-
-### 드라마 데이터(rlm이 중복쌍을 지원 안함)
-
-```{r}
-# fit_m_drama <- rlm(All_rating ~ . , data=netflix_drama)
-# summary(fit_m_drama)
-```
-
-```{r}
-# anova(fit_m_drama)
-```
-
-```{r}
-# par(mfrow = c(2,2))
-# plot(fit_m_drama)
-```
-
-### 영화 데이터
-
-```{r}
-fit_m_movie <- rlm(All_rating ~ . , data=netflix_movie)
-summary(fit_m_movie)
-```
-
-```{r}
-anova(fit_m_movie)
-```
-
-```{r}
-par(mfrow = c(2,2))
-plot(fit_m_movie)
+plot(fit_m)
 ```
 
 **로버스트 회귀에서 유의한 factor는 일반 회귀에서도 유의함**
 
 **개선 결과 유의한 factor가 줄어듬**
-
-**데이터 셋을 둘로 나눴을 때 cooks에서 많은 value가 제거 됨**
-
-**영화에 비해 드라마 데이터 양이 적고 유의한 factor가 적음**
