@@ -192,6 +192,30 @@ outlier <- as.integer(na.omit(outlier))
 netflix_movie <- netflix_movie[-outlier, ]
 ```
 
+## 다중공선성확인(GVIF\^(1/(2\*Df)) \> 2시 문제)
+
+### 종합데이터
+
+```{r}
+library(car)
+fit_tmp <- lm(All_rating ~ . , data=netflix_original)
+vif(fit_tmp)
+```
+
+### 드라마데이터(겹친 변수가 존재 aliased)
+
+```{r}
+# fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
+# vif(fit_tmp)
+```
+
+### 영화데이터
+
+```{r}
+fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
+vif(fit_tmp)
+```
+
 ## 일반회귀
 
 ### 종합 데이터
@@ -223,8 +247,7 @@ summary(fit_OLS_original) # Summary() 함수는 중심화 경향과 퍼짐정도
 
 ANOVA는 하나 이상의 범주 형 독립 변수 수준에 따라 양적 종속 변수 가 어떻게 변하는 지 추정하기위한 통계 검정 입니다.
 
-ANOVA 는 독립 변수의 각 수준에서 그룹 평균 에 차이가 있는지 여부를 테스트합니다.
-변량 분석. 3개이상 다수 집단을 비교할 때 사용하는 가설검정 방법으로, 다수간의 평균 비교에서 ANOVA를 통해 유의한 차이를 검정
+ANOVA 는 독립 변수의 각 수준에서 그룹 평균 에 차이가 있는지 여부를 테스트합니다. 변량 분석. 3개이상 다수 집단을 비교할 때 사용하는 가설검정 방법으로, 다수간의 평균 비교에서 ANOVA를 통해 유의한 차이를 검정
 
 ```{r}
 anova(fit_OLS_original) # 유의한 factor를 확인하기 위해 ANOVA함수를 이용함

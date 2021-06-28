@@ -325,6 +325,51 @@ outlier &lt;- as.integer(na.omit(outlier))
 netflix_movie &lt;- netflix_movie[-outlier, ]</code></pre>
 </div>
 </div>
+<div id="다중공선성확인gvif12df-2시-문제" class="section level2">
+<h2>다중공선성확인(GVIF^(1/(2*Df)) &gt; 2시 문제)</h2>
+<div id="종합데이터" class="section level3">
+<h3>종합데이터</h3>
+<pre class="r"><code>library(car)</code></pre>
+<pre><code>Warning: package &#39;car&#39; was built under R version 4.0.5</code></pre>
+<pre><code>Loading required package: carData</code></pre>
+<pre class="r"><code>fit_tmp &lt;- lm(All_rating ~ . , data=netflix_original)
+vif(fit_tmp)</code></pre>
+<pre><code>                         GVIF Df GVIF^(1/(2*Df))
+Mean_Length          1.300343  1        1.140326
+Director_max_award   1.109839  1        1.053489
+Age                297.915438  3        2.584335
+Year                 1.924585  7        1.047876
+Harmful_themes     224.340663  3        2.465006
+Lewdness             3.288835  3        1.219477
+Violence             4.548517  3        1.287197
+Profanity           10.268403  3        1.474293
+Fear                 3.406836  3        1.226663
+Drugs                4.421934  3        1.281156
+Immatatable          5.258529  3        1.318694</code></pre>
+</div>
+<div id="드라마데이터겹친-변수가-존재-aliased" class="section level3">
+<h3>드라마데이터(겹친 변수가 존재 aliased)</h3>
+<pre class="r"><code># fit_tmp &lt;- lm(All_rating ~ . , data=netflix_drama)
+# vif(fit_tmp)</code></pre>
+</div>
+<div id="영화데이터" class="section level3">
+<h3>영화데이터</h3>
+<pre class="r"><code>fit_tmp &lt;- lm(All_rating ~ . , data=netflix_movie)
+vif(fit_tmp)</code></pre>
+<pre><code>                         GVIF Df GVIF^(1/(2*Df))
+Mean_Length          1.333577  1        1.154806
+Director_max_award   1.138007  1        1.066774
+Age                283.000469  3        2.562307
+Year                 2.252298  7        1.059711
+Harmful_themes     195.986717  3        2.410115
+Lewdness             2.635513  3        1.175288
+Violence             4.672147  3        1.292963
+Profanity            6.876189  3        1.378980
+Fear                 3.381145  3        1.225116
+Drugs                3.274942  3        1.218617
+Immatatable          4.202978  3        1.270358</code></pre>
+</div>
+</div>
 <div id="일반회귀" class="section level2">
 <h2>일반회귀</h2>
 <div id="종합-데이터-2" class="section level3">
