@@ -147,6 +147,58 @@ ggplot(netflix_original,aes(x=as.factor(Immatatable),y=All_rating))+
   xlab("immatatable") + ylab("점수") + labs(fill = "Immatatable")
 ```
 
+## 다중공선성확인(GVIF\^(1/(2\*Df)) \> 2시 문제)
+
+### 종합데이터
+
+```{r}
+library(car)
+fit_tmp <- lm(All_rating ~ . , data=netflix_original)
+vif(fit_tmp)
+```
+
+### 드라마데이터(겹친 변수가 존재 aliased)
+
+```{r}
+# fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
+# vif(fit_tmp)
+```
+
+### 영화데이터
+
+```{r}
+fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
+vif(fit_tmp)
+```
+
+Age와 Harmful_themes에서 다중공선성 존재 이후 분석에서 Harmful_themes제거
+
+다중공선성 재확인
+
+### 종합데이터
+
+```{r}
+netflix_original <- netflix_original[,-6]
+fit_tmp <- lm(All_rating ~ . , data=netflix_original)
+vif(fit_tmp)
+```
+
+### 드라마데이터(겹친 변수가 존재 aliased)
+
+```{r}
+# netflix_drama <- netflix_drama[,-6]
+# fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
+# vif(fit_tmp)
+```
+
+### 영화데이터
+
+```{r}
+netflix_movie <- netflix_movie[,-6]
+fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
+vif(fit_tmp)
+```
+
 ## Cooks distance outlier제거
 
 종합데이터, 드라마데이터, 영화데이터를 가지고 outlier(이상치)를 제거하는 기준으로 cooks distance를 사용하였다.
@@ -190,30 +242,6 @@ text(x=1:length(cooks), y=cooks, labels = ifelse(cooks > 4/nrow(netflix), names(
 outlier <- names(cooks)[(cooks > 4/nrow(netflix_movie))]
 outlier <- as.integer(na.omit(outlier))
 netflix_movie <- netflix_movie[-outlier, ]
-```
-
-## 다중공선성확인(GVIF\^(1/(2\*Df)) \> 2시 문제)
-
-### 종합데이터
-
-```{r}
-library(car)
-fit_tmp <- lm(All_rating ~ . , data=netflix_original)
-vif(fit_tmp)
-```
-
-### 드라마데이터(겹친 변수가 존재 aliased)
-
-```{r}
-# fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
-# vif(fit_tmp)
-```
-
-### 영화데이터
-
-```{r}
-fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
-vif(fit_tmp)
 ```
 
 ## 일반회귀
