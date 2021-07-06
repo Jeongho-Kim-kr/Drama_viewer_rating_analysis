@@ -22,10 +22,10 @@ netflix <- read_excel('netflix_original_종합_수정(sum)_(정량화보함).xls
 
 ```{r}
 netflix_original <- netflix
-netflix_original <- netflix_original[,c(9,15,18,20:24,27:40)] # 엑셀에서 9,15,18,20~24과 27~40번째 열을 가져오는 것.
+netflix_original <- netflix_original[,c(9,15,18,32:40)] # 엑셀에서 9,15,18 과 32~40번째 열을 가져오는 것.
 netflix_original <- na.omit(netflix_original) # 어떤 결측치라도 있으면 행을 제거하고 남은 데이터를 반환
-netflix_original[, 14:22] <- lapply(netflix_original[, 14:22], factor) # 위에서 뽑은 12개 열중 4~12열을 계산을 편하게 만들어주고 factor 형태로 만들어줌
-netflix_original[, 1:13] <- lapply(netflix_original[, 1:13], as.numeric) # Mean_Length, Director_max_award, All_rating (1~3열) 항목을 숫자형으로 변환
+netflix_original[, 4:12] <- lapply(netflix_original[, 4:12], factor) # 위에서 뽑은 12개 열중 4~12열을 계산을 편하게 만들어주고 factor 형태로 만들어줌
+netflix_original[, 1:3] <- lapply(netflix_original[, 1:3], as.numeric) # Mean_Length, Director_max_award, All_rating (1~3열) 항목을 숫자형으로 변환
 ```
 
 ### 드라마 데이터
@@ -36,20 +36,20 @@ netflix_original[, 1:13] <- lapply(netflix_original[, 1:13], as.numeric) # Mean_
 
 ```{r}
 netflix_drama <- netflix[1:170,]
-netflix_drama <- netflix_drama[,c(9,15,18,20:24,27:40)]
+netflix_drama <- netflix_drama[,c(9,15,18,32:40)]
 netflix_drama <- na.omit(netflix_drama)
-netflix_drama[, 14:22] <- lapply(netflix_drama[, 14:22], factor)
-netflix_drama[, 1:13] <- lapply(netflix_drama[, 1:13], as.numeric)
+netflix_drama[, 4:12] <- lapply(netflix_drama[, 4:12], factor)
+netflix_drama[, 1:3] <- lapply(netflix_drama[, 1:3], as.numeric)
 ```
 
 ### 영화 데이터
 
 ```{r}
 netflix_movie <- netflix[171:589,]
-netflix_movie <- netflix_movie[,c(9,15,18,20:24,27:40)]
+netflix_movie <- netflix_movie[,c(9,15,18,32:40)]
 netflix_movie <- na.omit(netflix_movie)
-netflix_movie[, 14:22] <- lapply(netflix_movie[, 14:22], factor)
-netflix_movie[, 1:13] <- lapply(netflix_movie[, 1:13], as.numeric)
+netflix_movie[, 4:12] <- lapply(netflix_movie[, 4:12], factor)
+netflix_movie[, 1:3] <- lapply(netflix_movie[, 1:3], as.numeric)
 ```
 
 ```{r}
@@ -160,13 +160,41 @@ vif(fit_tmp)
 ### 드라마데이터(겹친 변수가 존재 aliased)
 
 ```{r}
-# fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
-# vif(fit_tmp)
+ fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
+ vif(fit_tmp)
 ```
 
 ### 영화데이터
 
 ```{r}
+fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
+vif(fit_tmp)
+```
+
+Age와 Harmful_themes에서 다중공선성 존재 이후 분석에서 Harmful_themes제거
+
+다중공선성 재확인
+
+### 종합데이터
+
+```{r}
+netflix_original <- netflix_original[,-6] # Harmful_themes제거
+fit_tmp <- lm(All_rating ~ . , data=netflix_original)
+vif(fit_tmp)
+```
+
+### 드라마데이터(겹친 변수가 존재 aliased)
+
+```{r}
+netflix_drama <- netflix_drama[,c(-6,-9)] # Harmful_themes, Profanity제거
+fit_tmp <- lm(All_rating ~ . , data=netflix_drama)
+vif(fit_tmp)
+```
+
+### 영화데이터
+
+```{r}
+netflix_movie <- netflix_movie[,-6] # Harmful_themes제거
 fit_tmp <- lm(All_rating ~ . , data=netflix_movie)
 vif(fit_tmp)
 ```
@@ -355,7 +383,7 @@ plot(fit_OLS_movie)
 ```{r}
 # 로버스트 회귀
 library('MASS') # 로버스트 회귀를 위해 MASS 라이브러리 로드
-fit_m_original <- rlm(All_rating ~ . , data = netflix_original)
+fit_m_original <- rlm(All_rating ~ . , data=netflix_original)
 summary(fit_m_original) # MASS패키지의 함수인 rlm을 사용하여 로버스트 회귀분석 함.
 ```
 
@@ -381,12 +409,12 @@ plot(fit_m_original)
 ### 드라마 데이터(rlm이 중복쌍을 지원 안함)
 
 ```{r}
-# fit_m_drama <- rlm(All_rating ~ . , data=netflix_drama)
-# summary(fit_m_drama)
+fit_m_drama <- rlm(All_rating ~ . , data=netflix_drama)
+summary(fit_m_drama)
 ```
 
 ```{r}
-# anova(fit_m_drama)
+anova(fit_m_drama)
 ```
 
 ```{r}
